@@ -56,18 +56,29 @@
         "scope": [
           "https://xueqiu.com/*",
           "https://stock.xueqiu.com/*",
-          "http://localhost:10100/*"
+          "http://localhost:10100/*",
+          "https://upsort.com/*"
         ]
       }
     },
     "windows": [
       {
-        "title": "",
+        "title": "MenuBar",
+        "label": "MenuBar",
         "width": 380,
         "height": 700,
         "resizable": false,
         "fullscreen": false,
         "visible": false
+      },
+      {
+        "title": "News",
+        "label": "News",
+        "width": 1024,
+        "height": 768,
+        "resizable": true,
+        "fullscreen": false,
+        "visible": true
       }
     ],
     "security": {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { getStocks, Stock } from "./apiv2/api"
-import TopIndex from "./component/topIndex"
-import StockList from "./component/stockList"
-import BottomBar from "./component/bottomBar"
+import { getStocks, Stock } from "./api/xueqiu/api"
+import TopIndex from "./component/menubar/topIndex"
+import StockList from "./component/menubar/stockList"
+import BottomBar from "./component/menubar/bottomBar"
 
 const IndexStock = {
   '上证指数': 'SH000001',

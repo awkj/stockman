@@ -1,6 +1,6 @@
-import { Stock } from "../apiv2/api"
+import { Stock } from "../../api/xueqiu/api"
 import { open } from '@tauri-apps/api/shell'
-import { getBackgoundClass } from './util'
+import { getBackgoundClass } from '../util'
 export default function StockList({ stocks }: { stocks: Stock[] | undefined }) {
     if (!stocks) {
         return <></>

@@ -1,7 +1,7 @@
 import { useState } from "react"
-import { Stock } from "../apiv2/api"
+import { Stock } from "../../api/xueqiu/api"
 import dollar from '../assets/dollar.svg'
-import { getTips } from "./util"
+import { getTips } from "../util"
 
 export default function ButtomBar({ stock }: { stock: Stock | undefined }) {
     const [tips, setTips] = useState('')

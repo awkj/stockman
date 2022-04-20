@@ -1,5 +1,5 @@
-import { Stock } from "../apiv2/api"
-import { getTextClass } from "./util"
+import { Stock } from "../../api/xueqiu/api"
+import { getTextClass } from "../util"
 
 export default function TopIndex({ stocks }: { stocks: Stock[] | undefined }) {
     if (!stocks) {

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-import { Stock } from "../apiv2/api"
+import { Stock } from "../api/xueqiu/api"
 
 export function getBackgoundClass(percent: number) {
     if (percent === 0) {

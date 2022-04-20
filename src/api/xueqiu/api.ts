@@ -1,5 +1,5 @@
 import { fetch, ResponseType, Response } from "@tauri-apps/api/http"
-import { XueqiuResp } from "./xueqiu"
+import { XueqiuResp } from "./type"
 
 export interface Stock {
     name: string
