@@ -2,6 +2,37 @@ import dayjs from 'dayjs'
 import { open as openURL } from '@tauri-apps/api/shell'
 
 import { Stock } from "../api/xueqiu/api"
+import { Store } from 'tauri-plugin-store-api'
+
+const store = new Store('setting')
+
+export async function addStockToStore(stockNum: string) {
+    const stockKey = await store.get<string>('stocks')
+    let stockList = []
+    if (stockKey !== null) {
+        stockList = JSON.parse(stockKey!)
+    }
+    stockList.push(stockNum)
+    stockList = [...new Set(stockList)]
+    await store.set('stocks', JSON.stringify(stockList))
+    await store.save()
+}
+
+export async function getStockToStore() {
+    const stockKey = await store.get<string>('stocks')
+    console.log(stockKey)
+    let stockList = []
+    if (stockKey !== null) {
+        stockList = JSON.parse(stockKey!)
+    }
+    return stockList
+}
+
+export async function saveStockToStore(stockList: string[]) {
+    console.log("执行保存")
+    await store.set('stocks', JSON.stringify(stockList))
+    await store.save()
+}
 
 export function getBackgoundClass(percent: number) {
     if (percent === 0) {

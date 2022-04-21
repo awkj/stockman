@@ -2,11 +2,9 @@ import { useState } from "react"
 import { Stock } from "../../api/xueqiu/api"
 import dollar from '../../assets/dollar.svg'
 import { getTips } from "../util"
-import { createPortal } from 'react-dom'
 
-export default function ButtomBar({ stock }: { stock: Stock | undefined }) {
+export default function ButtomBar({ stock, setModalOpen }: { stock: Stock | undefined, setModalOpen: Function }) {
     const [tips, setTips] = useState('')
-
     const [displayText, displayClass] = getTips(tips, stock)
     return (
         <div className="flex flex-row bg-stone-200 h-12 w-full absolute bottom-0">
@@ -17,7 +15,7 @@ export default function ButtomBar({ stock }: { stock: Stock | undefined }) {
                 type="button"
                 onMouseOver={() => { setTips('添加自选') }}
                 onMouseOut={() => { setTips('') }}
-                onClick={() => { AddStock() }}
+                onClick={() => { setModalOpen((value: boolean) => !value) }}
                 className={`mx-auto w-3/5 ml-6 whitespace-nowrap  my-auto h-[60%]  text-white  hover:bg-fuchsia-800/80 font-medium rounded-md text-sm  text-center items-center ${displayClass}`}
             >
                 {displayText}
@@ -31,20 +29,4 @@ export default function ButtomBar({ stock }: { stock: Stock | undefined }) {
     )
 }
 
-const modalRoot = document.getElementById('modal')
-function AddStock() {
-    console.log("log add stock")
-    createPortal(<ModalSearch></ModalSearch>, modalRoot!)
-}
 
-function ModalSearch() {
-    return (
-        <div>
-            123
-            <input></input>
-            <ul>
-                <li>123</li>
-            </ul>
-        </div>
-    )
-}

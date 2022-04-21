@@ -120,4 +120,23 @@ export interface XueqiuResp {
     error_description: string
 }
 
+export interface Stock {
+    code: string
+    name: string
+    enName: string
+    hasexist: string
+    flag?: any
+    type: number
+    stock_id: number
+    ind_id: number
+    ind_name: string
+    ind_color?: any
+    _source: string
+}
 
+
+export interface XueqiuSearchResp {
+    stocks: Stock[]
+    error_code: number
+    error_description: string
+}

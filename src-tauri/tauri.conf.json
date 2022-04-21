@@ -17,7 +17,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "com.awkj.stockman",
       "icon": [
         "icons/money.png"
       ],

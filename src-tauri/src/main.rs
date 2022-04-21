@@ -7,11 +7,13 @@ use cocoa::appkit::{NSWindow, NSWindowStyleMask, NSWindowTitleVisibility};
 use tauri::Position::Physical;
 use tauri::{Manager, PhysicalPosition, Runtime, Window};
 use tauri::{SystemTray, SystemTrayEvent};
+use tauri_plugin_store::PluginBuilder;
 // use window_shadows::set_shadow;
 // use window_vibrancy::{apply_vibrancy, NSVisualEffectMaterial};
 fn main() {
     let system_tray = SystemTray::new();
     tauri::Builder::default()
+        .plugin(PluginBuilder::default().build())
         .setup(|app| {
             let win_menubar = app.get_window("MenuBar").unwrap();
             // let win_news = app.get_window("News").unwrap();

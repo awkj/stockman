@@ -23,6 +23,10 @@ window-vibrancy = "0.1.1"
 window-shadows = "0.1.2"
 # tauri-plugin-positioner = {git = "https://github.com/JonasKruckenberg/tauri-plugin-positioner", branch = "main"}
 
+[dependencies.tauri-plugin-store]
+git = "https://github.com/tauri-apps/tauri-plugin-store"
+branch = "dev"
+
 [features]
 # by default Tauri runs in production mode
 # when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL

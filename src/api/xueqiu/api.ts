@@ -1,10 +1,9 @@
 import { fetch, ResponseType, Response } from "@tauri-apps/api/http"
-import { XueqiuResp } from "./type"
+import { XueqiuResp, XueqiuSearchResp } from "./type"
 
 export interface Stock {
     name: string
     symbol: string
-
     now: number
     low: number
     high: number
@@ -13,6 +12,11 @@ export interface Stock {
     yesterday: number
     timestamp: number
     status: string
+}
+
+export interface StockMini {
+    name: string
+    symbol: string
 }
 
 let token: string = ''
@@ -36,10 +40,8 @@ export async function getStocks(code: string[]): Promise<Stock[] | undefined> {
 
     const token = await getToken()
 
-    // https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=SH000001,SZ399001,SZ399006,SH000688,HKHSI,HKHSCEI,HKHSCCI,.DJI,.IXIC,.INX
     const queryParam = code.join(',')
     const url = `https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=${queryParam}`
-    // const url = `http://localhost:10100/v5/stock/batch/quote.json?symbol=SH000001`
 
     console.log(url)
     let res: Response<XueqiuResp>
@@ -64,6 +66,39 @@ export async function getStocks(code: string[]): Promise<Stock[] | undefined> {
                 timestamp: quote.timestamp,
                 status: item.market.status
 
+            }
+            return stock
+        })
+    } catch (e) {
+        console.error(e)
+    }
+}
+
+export async function searchStocks(key: string): Promise<StockMini[] | undefined> {
+
+    const token = await getToken()
+
+    const url = `https://xueqiu.com/stock/search.json?code=${encodeURIComponent(key)}`
+
+    console.log("搜索", url)
+    let res: Response<XueqiuSearchResp>
+    try {
+        res = await fetch<XueqiuSearchResp>(url, {
+            method: "GET",
+            headers: {
+                'Cookie': await getToken()
+            }
+        })
+        return res.data.stocks.filter((item => {
+            if (item.code.includes("SH") || item.code.includes("SZ")) {
+                return true
+            }
+        })
+
+        ).map(item => {
+            const stock: StockMini = {
+                name: item.name,
+                symbol: item.code,
             }
             return stock
         })
