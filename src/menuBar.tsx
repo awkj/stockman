@@ -22,6 +22,8 @@ function App() {
           IndexStock.上证指数,
           IndexStock.深证成指,
           IndexStock.创业板指,
+          "SZ000516",
+          "SH600078",
           "SZ002466",
           "SZ002192",
           "SH601988",
@@ -44,7 +46,7 @@ function App() {
   }, [])
 
   return (
-    <div className="m-4 flex flex-col mt-3 mb-3 mx-3">
+    <div className="flex flex-col">
       <TopIndex stocks={stocks}></TopIndex>
       <StockList stocks={stocks}></StockList>
       <BottomBar stock={stocks ? stocks[0] : undefined}></BottomBar>

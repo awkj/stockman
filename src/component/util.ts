@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { open as openURL } from '@tauri-apps/api/shell'
 
 import { Stock } from "../api/xueqiu/api"
 
@@ -47,4 +48,9 @@ export function getTips(tips: string, stock: Stock | undefined) {
 function getDate(tm: number) {
     const refreshDate = dayjs(tm)
     return refreshDate.format('YYYY-MM-DD HH:mm:ss')
+}
+
+export async function openXueqiu(symbol: string) {
+    console.log("symbol", symbol)
+    await openURL(`https://xueqiu.com/S/${symbol}`)
 }

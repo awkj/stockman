@@ -70,15 +70,6 @@
         "resizable": false,
         "fullscreen": false,
         "visible": false
-      },
-      {
-        "title": "News",
-        "label": "News",
-        "width": 1024,
-        "height": 768,
-        "resizable": true,
-        "fullscreen": false,
-        "visible": true
       }
     ],
     "security": {

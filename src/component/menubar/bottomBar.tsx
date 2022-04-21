@@ -1,25 +1,26 @@
 import { useState } from "react"
 import { Stock } from "../../api/xueqiu/api"
-import dollar from '../assets/dollar.svg'
+import dollar from '../../assets/dollar.svg'
 import { getTips } from "../util"
+import { createPortal } from 'react-dom'
 
 export default function ButtomBar({ stock }: { stock: Stock | undefined }) {
     const [tips, setTips] = useState('')
 
     const [displayText, displayClass] = getTips(tips, stock)
     return (
-        <div className="flex flex-row bg-gray-200 h-12 mt-1.5 rounded-lg">
-            <button type="button" className=" items-center w-7 h-7 ml-4 p-1 my-auto  rounded-full  bg-yellow-500/90 hover:shadow-lg  hover:bg-yellow-600/80">
+        <div className="flex flex-row bg-stone-200 h-12 w-full absolute bottom-0">
+            <button type="button" className=" items-center w-7 h-7 ml-4 p-1 my-auto  rounded-full  bg-yellow-400/70 hover:shadow-lg  hover:bg-yellow-500/80">
                 <img src={dollar} className="" />
             </button>
-            <button type="button" onMouseOver={
-                () => {
-                    setTips('添加自选')
-                }
-            } onMouseOut={() => { setTips('') }} className={`mx-auto w-3/5 ml-6 whitespace-nowrap  my-auto h-[60%]  text-white  hover:bg-fuchsia-800/80 font-medium rounded-md text-sm  text-center items-center ${displayClass}`}>
-                {
-                    displayText
-                }
+            <button
+                type="button"
+                onMouseOver={() => { setTips('添加自选') }}
+                onMouseOut={() => { setTips('') }}
+                onClick={() => { AddStock() }}
+                className={`mx-auto w-3/5 ml-6 whitespace-nowrap  my-auto h-[60%]  text-white  hover:bg-fuchsia-800/80 font-medium rounded-md text-sm  text-center items-center ${displayClass}`}
+            >
+                {displayText}
             </button>
             <button type="button" className="h-8 w-8 my-auto mr-4 ml-auto text-gray-900/80 rounded-full  hover:shadow hover:shadow-gray-500">
                 <svg xmlns="http://www.w3.org/2000/svg" className="" viewBox="0 0 20 20" fill="currentColor">
@@ -27,5 +28,23 @@ export default function ButtomBar({ stock }: { stock: Stock | undefined }) {
                 </svg>
             </button>
         </div >
+    )
+}
+
+const modalRoot = document.getElementById('modal')
+function AddStock() {
+    console.log("log add stock")
+    createPortal(<ModalSearch></ModalSearch>, modalRoot!)
+}
+
+function ModalSearch() {
+    return (
+        <div>
+            123
+            <input></input>
+            <ul>
+                <li>123</li>
+            </ul>
+        </div>
     )
 }

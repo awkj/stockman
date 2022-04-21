@@ -14,12 +14,12 @@ fn main() {
     tauri::Builder::default()
         .setup(|app| {
             let win_menubar = app.get_window("MenuBar").unwrap();
-            let win_news = app.get_window("News").unwrap();
+            // let win_news = app.get_window("News").unwrap();
             // #[cfg(target_os = "macos")]
             // apply_vibrancy(&win_news, NSVisualEffectMaterial::UnderWindowBackground)
             //     .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
             win_menubar.set_transparent_titlebar(true, true);
-            win_news.set_transparent_titlebar(true, false);
+            // win_news.set_transparent_titlebar(true, false);
             // set_shadow(&win_menubar, true).expect("Unsupported platform!");
             Ok(())
         })
@@ -29,6 +29,7 @@ fn main() {
                 position, size: _, ..
             } => {
                 let win = app.get_window("MenuBar").unwrap();
+
                 let pos = PhysicalPosition {
                     x: (position.x as i32) - 280,
                     y: position.y as i32,

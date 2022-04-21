@@ -9,13 +9,16 @@ module.exports = {
     extend: {},
   },
   plugins: [
+    require('flowbite/plugin'),
     plugin(function ({ addUtilities }) {
       addUtilities({
         '.scrollbar-hide': {
           '&::-webkit-scrollbar': {
             display: 'none',
-            width: '0px'
           }
+        },
+        '.top-84px': {
+          top: '84px'
         }
       })
     })

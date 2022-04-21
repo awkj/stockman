@@ -41,6 +41,7 @@ export async function getStocks(code: string[]): Promise<Stock[] | undefined> {
     const url = `https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=${queryParam}`
     // const url = `http://localhost:10100/v5/stock/batch/quote.json?symbol=SH000001`
 
+    console.log(url)
     let res: Response<XueqiuResp>
     try {
         res = await fetch<XueqiuResp>(url, {
