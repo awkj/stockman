@@ -11,6 +11,7 @@ A Applicaiont for display stock and  encryption coin  on mac menubar
 - [x]  search and add stock
 - [ ]  support multi lanauage (English/简体中文/正體中文/にほんご)
 - [ ]  add encryption coin and HongKong / USA / Taiwan / Japan stock
+- [ ]  use recoil to manage react status
 
 ## API
 
