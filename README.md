@@ -1,8 +1,14 @@
 # Stockman
 
-A Applicaiont for display stock and  encryption coin  on mac menubar
 
 
+## Introduction
+
+A Applicaion for display stock and encryption coin on mac menubar
+
+
+
+## Feature
 - [x]  status Bar
 - [x]  click jump to xuqiu
 - [x]  hidden scrobal on stock list
@@ -13,27 +19,46 @@ A Applicaiont for display stock and  encryption coin  on mac menubar
 - [ ]  add encryption coin and HongKong / USA / Taiwan / Japan stock
 - [ ]  use recoil to manage react status
 
+
+
+## Platforms
+macOS Version > 10.12 (Sierra)
+
+
+
+## Infrastructure
+
+- Tauri（a similar like Electron, by base on rust and system webview)
+- Typescript (You Know)
+- Vite (fast and fast on develment)
+- Rust (use on backend on tauri)
+- React (UI manager)
+- TailwindCSS (utility CSS)
+
+
+
+
 ## API
 
-####  upsort API
+####  Upsort API
 
-**1. get stock index**
+**1. Get stock index**
 
 [https://upsort.com/all](https://upsort.com/all)
 
-**2. get index on A stock**
+**2. Get index on A stock**
 
 [https://upsort.com/pan](https://upsort.com/pan)
 
-**3. get message or news**
+**3. Get message or news**
 
 [https://upsort.com/msg](https://upsort.com/msg)
 
 
 
-#### xueqiu API
+#### Xueqiu API
 
-**1. get stock price and status immediately**
+**1. Get stock price and status immediately**
 
 [https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=SH0000001&extend=detail](https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=SH0000001&extend=detail)
 
@@ -46,7 +71,7 @@ A Applicaiont for display stock and  encryption coin  on mac menubar
 
 ## Thanks
 
- the two projects to help me get the API
+ The two projects to help me get the API
 
 - [https://github.com/zhangxiangliang/stock-api](https://github.com/zhangxiangliang/stock-api)
 
