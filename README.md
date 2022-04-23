@@ -17,6 +17,7 @@ A Applicaiont for display stock and  encryption coin  on mac menubar
 ####  upsort API
 
 **1. get stock index**
+
 [https://upsort.com/all](https://upsort.com/all)
 
 **2. get index on A stock**
@@ -36,8 +37,8 @@ A Applicaiont for display stock and  encryption coin  on mac menubar
 [https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=SH0000001&extend=detail](https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=SH0000001&extend=detail)
 
 
-
 **2. K line from xueqiu**
+
 [https://stock.xueqiu.com/v5/stock/chart/minute.json?symbol=SH000979&period=1d](https://stock.xueqiu.com/v5/stock/chart/minute.json?symbol=SH000979&period=1d)
 
 
@@ -46,6 +47,6 @@ A Applicaiont for display stock and  encryption coin  on mac menubar
 
  the two projects to help me get the API
 
-- https://github.com/zhangxiangliang/stock-api
+- [https://github.com/zhangxiangliang/stock-api](https://github.com/zhangxiangliang/stock-api)
 
-- https://upsort.com/
+- [https://upsort.com/](https://upsort.com/)
