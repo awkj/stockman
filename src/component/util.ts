@@ -34,9 +34,10 @@ export async function saveStockToStore(stockList: string[]) {
     await store.save()
 }
 
+
 export function getBackgoundClass(percent: number) {
     if (percent === 0) {
-        return `bg-neutral-500`
+        return `bg-neutral-700`
     }
     if (percent > 0) {
         return `bg-red-700`
@@ -45,9 +46,21 @@ export function getBackgoundClass(percent: number) {
 
 }
 
+export function getTextClassByDiff(value: number, base: number) {
+    if (value === base) {
+        return `text-neutral-700`
+    } else if (value > base) {
+        return `text-red-700`
+    } else {
+        return `text-emerald-700`
+    }
+
+}
+
+
 export function getTextClass(percent: number) {
     if (percent === 0) {
-        return `text-neutral-500`
+        return `text-neutral-700`
     }
     if (percent > 0) {
         return `text-red-700`
@@ -66,7 +79,7 @@ export function getTips(tips: string, stock: Stock | undefined) {
     }
 
 
-    if (['休盘中', '已收盘'].includes(stock.status)) {
+    if (['休盘中', '已收盘', '休市'].includes(stock.status)) {
         return [stock?.status, 'bg-gray-600/80']
     }
 

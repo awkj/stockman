@@ -14,6 +14,7 @@ specifiers:
   postcss: ^8.4.12
   react: ^18.0.0
   react-dom: ^18.0.0
+  recoil: ^0.7.2
   tailwindcss: ^3.0.24
   tauri-plugin-store-api: github:tauri-apps/tauri-plugin-store#7ac980a81683b49672d18b7f0d01cd04dc3a7ca0
   typescript: ^4.6.3
@@ -26,6 +27,7 @@ dependencies:
   flowbite: 1.4.2
   react: 18.0.0
   react-dom: 18.0.0_react@18.0.0
+  recoil: 0.7.2_react-dom@18.0.0+react@18.0.0
   tauri-plugin-store-api: github.com/tauri-apps/tauri-plugin-store/7ac980a81683b49672d18b7f0d01cd04dc3a7ca0
   use-immer: 0.7.0_immer@9.0.12+react@18.0.0
 
@@ -975,6 +977,10 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /hamt_plus/1.0.2:
+    resolution: {integrity: sha512-t2JXKaehnMb9paaYA7J0BX8QQAY8lwfQ9Gjf4pg/mk4krt+cmwmU652HOoWonf+7+EQV97ARPMhhVgU1ra2GhA==}
+    dev: false
+
   /has-flag/3.0.0:
     resolution: {integrity: sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw==}
     engines: {node: '>=4'}
@@ -1207,6 +1213,23 @@ packages:
     dependencies:
       picomatch: 2.3.1
     dev: true
+
+  /recoil/0.7.2_react-dom@18.0.0+react@18.0.0:
+    resolution: {integrity: sha512-OT4pI7FOUHcIoRtjsL5Lqq+lFFzQfir4MIbUkqyJ3nqv3WfBP1pHepyurqTsK5gw+T+I2R8+uOD28yH+Lg5o4g==}
+    peerDependencies:
+      react: '>=16.13.1'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      hamt_plus: 1.0.2
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+    dev: false
 
   /resolve/1.22.0:
     resolution: {integrity: sha512-Hhtrw0nLeSrFQ7phPp4OOcVjLPIeMnRlr5mcnVuMe7M/7eBn98A3hmFRLoFo3DLZkivSYwhRUJTyPyWAk56WLw==}

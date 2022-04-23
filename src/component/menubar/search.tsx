@@ -3,10 +3,11 @@ import { createPortal } from "react-dom"
 import { searchStocks } from "../../api/xueqiu/api"
 import { StockMini } from "../../api/xueqiu/api"
 import { addStockToStore } from "../util"
-const modalDom = document.getElementById('modal')
+import modalDom from "../base"
+import { Modal } from '../../menuBar'
 
-export default function Search({ modalOpen }: { modalOpen: boolean, }) {
-    if (!modalOpen) {
+export default function Search({ modalStatus }: { modalStatus: Modal }) {
+    if (!modalStatus.searchModalOpen) {
         return null
     }
     return (

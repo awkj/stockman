@@ -11,7 +11,11 @@ export interface Stock {
     percentStr: string
     yesterday: number
     timestamp: number
-    status: string
+    status: string,
+    open: number,
+    last_close: number,
+    turnover_rate: number
+    volume_ratio: number
 }
 
 export interface StockMini {
@@ -41,7 +45,7 @@ export async function getStocks(code: string[]): Promise<Stock[] | undefined> {
     const token = await getToken()
 
     const queryParam = code.join(',')
-    const url = `https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=${queryParam}`
+    const url = `https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=${queryParam}&extend=detail`
 
     console.log(url)
     let res: Response<XueqiuResp>
@@ -64,8 +68,11 @@ export async function getStocks(code: string[]): Promise<Stock[] | undefined> {
                 percentStr: getPercent(quote.percent),
                 yesterday: quote.last_close,
                 timestamp: quote.timestamp,
-                status: item.market.status
-
+                status: item.market.status,
+                open: quote.open!,
+                last_close: quote.last_close,
+                turnover_rate: quote.turnover_rate!,
+                volume_ratio: quote.volume_ratio!
             }
             return stock
         })

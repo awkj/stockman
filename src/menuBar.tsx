@@ -4,6 +4,7 @@ import TopIndex from "./component/menubar/topIndex"
 import StockList from "./component/menubar/stockList"
 import BottomBar from "./component/menubar/bottomBar"
 import Search from "./component/menubar/search"
+import SettingModal from "./component/menubar/setting"
 import { getStockToStore, saveStockToStore } from "./component/util"
 import { useImmer } from 'use-immer'
 
@@ -20,11 +21,18 @@ const stockIndex = [
   IndexStock.深证成指,
   IndexStock.创业板指,
 ]
+export interface Modal {
+  searchModalOpen: boolean
+  settingModalOpen: boolean
+}
 
 function App() {
   const [stocks, setStocks] = useState<Stock[]>()
   // const [stockNumList, setStockNumList] = useImmer<string[]>([])
-  const [modalOpen, SetModalOpen] = useState(false)
+  const [modalStatus, setModalStatus] = useState<Modal>({
+    searchModalOpen: false,
+    settingModalOpen: false
+  })
 
   useEffect(() => {
     // const buildData = async () => {
@@ -49,9 +57,10 @@ function App() {
   return (
     <div className="flex flex-col z-0 ">
       <TopIndex stocks={stocks}></TopIndex>
-      <StockList stocks={stocks} modalOpen={modalOpen} setModalOpen={SetModalOpen}></StockList>
-      <Search modalOpen={modalOpen} ></Search>
-      <BottomBar stock={stocks ? stocks[0] : undefined} setModalOpen={SetModalOpen}></BottomBar>
+      <StockList stocks={stocks} modalStatus={modalStatus!} setModalStatus={setModalStatus}></StockList>
+      <Search modalStatus={modalStatus!} ></Search>
+      <SettingModal modalStatus={modalStatus!} ></SettingModal>
+      <BottomBar stock={stocks ? stocks[0] : undefined} modalStatus={modalStatus!} setModalStatus={setModalStatus}></BottomBar>
     </div >
   )
 }

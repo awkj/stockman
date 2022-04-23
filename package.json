@@ -14,6 +14,7 @@
     "flowbite": "^1.4.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "recoil": "^0.7.2",
     "tauri-plugin-store-api": "github:tauri-apps/tauri-plugin-store#7ac980a81683b49672d18b7f0d01cd04dc3a7ca0",
     "use-immer": "^0.7.0"
   },
