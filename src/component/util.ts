@@ -79,7 +79,8 @@ export function getTips(tips: string, stock: Stock | undefined) {
     }
 
 
-    if (['休盘中', '已收盘', '休市'].includes(stock.status)) {
+    // if (['休盘中', '已收盘', '休市'].includes(stock.status)) {
+    if (stock.status !== '交易中') {
         return [stock?.status, 'bg-gray-600/80']
     }
 

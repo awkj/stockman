@@ -11,7 +11,7 @@
   },
   "tauri": {
     "systemTray": {
-      "iconPath": "icons/money.png",
+      "iconPath": "icons/dollar-blank.png",
       "iconAsTemplate": false
     },
     "bundle": {
