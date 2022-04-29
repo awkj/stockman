@@ -37,7 +37,8 @@ export const backgroundBlurState = selector({
     get: ({ get }) => {
         const openSearch = get(openSearchState)
         const openSetting = get(openSettingState)
-        if (openSearch || openSetting) {
+        const openCoin = get(openCoinState)
+        if (openSearch || openSetting || openCoin) {
             return true
         } else {
             return false

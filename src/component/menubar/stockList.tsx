@@ -62,12 +62,12 @@ function StockItem({ stockDetail }: { stockDetail: StockDetail }) {
                 }
             }
             }>
-                <div className="flex flex-col mr-auto">
+                <div className="flex flex-col mr-auto items-start">
                     <span className="whitespace-nowrap  tracking-widest text-xs font-normal pl-0.5">{stockDetail.name}</span>
-                    <button className="scale-90 origin-left " onClick={() => {
+                    <button onClick={() => {
                         openXueqiu(stockDetail.symbol)
                     }}>
-                        <span className="font-mono bg-blue-100 text-blue-800 hover:bg-blue-300/90  hover:shadow text-xs font-normal px-1 py-0.5 rounded">{stockDetail.symbol}</span>
+                        <span className="font-mono py-0.5 px-1 bg-blue-100 text-blue-800 hover:bg-blue-400/70  hover:shadow text-xs font-normal rounded">{stockDetail.symbol}</span>
                     </button>
                 </div>
 
