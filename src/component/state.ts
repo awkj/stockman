@@ -19,9 +19,16 @@ export const openCoinState = atom({
     default: false,
 })
 
+const stocksSelector = selector({
+    key: 'stocksSelector',
+    get: async ({ get }) => {
+        return await getStockToStore() as string[]
+    }
+})
+
 export const stocksState = atom({
     key: "stocks",
-    default: await getStockToStore() as string[]
+    default: stocksSelector
 })
 
 

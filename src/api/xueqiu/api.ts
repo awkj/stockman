@@ -120,6 +120,9 @@ export async function searchStocks(key: string): Promise<StockMini[] | undefined
 }
 
 function getPercent(percent: number): string {
+    if (!percent) {
+        return `0.00`
+    }
     if (percent >= 0) {
         return `+${percent.toFixed(2)}`
     } else {

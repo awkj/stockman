@@ -23,14 +23,13 @@ export async function getStockToStore() {
 }
 
 export async function saveStockToStore(stockList: string[]) {
-    console.log("存储股票列表", stockList)
     await store.set(configKey, JSON.stringify(stockList))
     await store.save()
 }
 
 
 export function getBackgoundClass(percent: number) {
-    if (percent === 0) {
+    if (percent === 0 || percent == null) {
         return `bg-neutral-700`
     }
     if (percent > 0) {
@@ -48,12 +47,11 @@ export function getTextClassByDiff(value: number, base: number) {
     } else {
         return `text-emerald-700`
     }
-
 }
 
 
 export function getTextClass(percent: number) {
-    if (percent === 0) {
+    if (percent === 0 || percent == null) {
         return `text-neutral-700`
     }
     if (percent > 0) {
@@ -93,3 +91,4 @@ export async function openXueqiu(symbol: string) {
     console.log("symbol", symbol)
     await openURL(`https://xueqiu.com/S/${symbol}`)
 }
+export { }
