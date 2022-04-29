@@ -6,9 +6,7 @@ import { backgroundBlurState, openSearchState, openSettingState } from "../state
 import {
     useSetRecoilState,
     useRecoilValue,
-    useRecoilState,
 } from 'recoil'
-import { stocksState } from "../stocks"
 import StockExpand from "./stockExpand"
 
 export default function StockList({ stocks: stockDetails }: { stocks: StockDetail[] | undefined }) {
