@@ -4,9 +4,11 @@
 
 ## Introduction
 
-A Applicaion for display stock and encryption coin on mac menubar
+A Application for display stock and encryption coin on mac menubar
 
+实业误国、地产兴邦
 
+<img width="460" alt="image" src="https://user-images.githubusercontent.com/9017743/165908002-38efe9f6-8ba8-48f7-9abe-7fa0a11e8576.png">
 
 ## Feature
 - [x]  status Bar
@@ -17,7 +19,7 @@ A Applicaion for display stock and encryption coin on mac menubar
 - [x]  search and add stock
 - [ ]  support multi lanauage (English/简体中文/正體中文/にほんご)
 - [ ]  add encryption coin and HongKong / USA / Taiwan / Japan stock
-- [ ]  use recoil to manage react status
+- [x]  use recoil to manage react status
 
 
 
