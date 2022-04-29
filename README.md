@@ -4,8 +4,9 @@
 
 ## Introduction
 
-A Applicaion for display stock and encryption coin on mac menubar
+A Application for display stock and encryption coin on mac menubar
 
+<img width="416" alt="image" src="https://user-images.githubusercontent.com/9017743/165907163-335a19d9-9e71-4973-9f4d-65c7187e244a.png">
 
 
 ## Feature
