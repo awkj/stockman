@@ -20,6 +20,9 @@ module.exports = {
         '.top-84px': {
           top: '84px'
         },
+        '.bottom-52px': {
+          bottom: '52px'
+        },
         '.blur-mini': {
           filter: 'blur(2px)'
         }

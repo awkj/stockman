@@ -1,25 +1,19 @@
 import dayjs from 'dayjs'
 import { open as openURL } from '@tauri-apps/api/shell'
-
-import { Stock } from "../api/xueqiu/api"
+import { StockDetail } from "../api/xueqiu/api"
 import { Store } from 'tauri-plugin-store-api'
+
+const modalDom = document.getElementById('modal')
+
+export default modalDom
+
 
 const store = new Store('setting')
 
-export async function addStockToStore(stockNum: string) {
-    const stockKey = await store.get<string>('stocks')
-    let stockList = []
-    if (stockKey !== null) {
-        stockList = JSON.parse(stockKey!)
-    }
-    stockList.push(stockNum)
-    stockList = [...new Set(stockList)]
-    await store.set('stocks', JSON.stringify(stockList))
-    await store.save()
-}
+const configKey = "stocklist"
 
 export async function getStockToStore() {
-    const stockKey = await store.get<string>('stocks')
+    const stockKey = await store.get<string>(configKey)
     console.log(stockKey)
     let stockList = []
     if (stockKey !== null) {
@@ -29,8 +23,8 @@ export async function getStockToStore() {
 }
 
 export async function saveStockToStore(stockList: string[]) {
-    console.log("执行保存")
-    await store.set('stocks', JSON.stringify(stockList))
+    console.log("存储股票列表", stockList)
+    await store.set(configKey, JSON.stringify(stockList))
     await store.save()
 }
 
@@ -69,7 +63,7 @@ export function getTextClass(percent: number) {
 }
 
 
-export function getTips(tips: string, stock: Stock | undefined) {
+export function getTips(tips: string, stock: StockDetail | undefined) {
     if (tips) {
         return [tips, '']
     }
@@ -85,7 +79,7 @@ export function getTips(tips: string, stock: Stock | undefined) {
     }
 
     const text = '更新于: ' + getDate(stock?.timestamp || 0)
-    return [text, 'bg-blue-600/90 text-xs']
+    return [text, 'bg-blue-600/80 text-xs']
 }
 
 

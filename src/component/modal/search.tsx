@@ -2,23 +2,26 @@ import { useEffect, useState } from "react"
 import { createPortal } from "react-dom"
 import { searchStocks } from "../../api/xueqiu/api"
 import { StockMini } from "../../api/xueqiu/api"
-import { addStockToStore } from "../util"
-import modalDom from "../base"
-import { Modal } from '../../menuBar'
+import modalDom from "../util"
+import { openSearchState, stocksState } from "../state"
+import {
+    useRecoilState,
+    useRecoilValue,
+} from 'recoil'
 
-export default function Search({ modalStatus }: { modalStatus: Modal }) {
-    if (!modalStatus.searchModalOpen) {
+
+export default function SearchModal() {
+    const openSearch = useRecoilValue(openSearchState)
+    if (!openSearch) {
         return null
     }
     return (
-        createPortal(
-            <SearchModal ></SearchModal>
+        createPortal(<Search ></Search>
             , modalDom!)
     )
 }
 
-
-function SearchModal() {
+function Search() {
     const [keyword, setKeyword] = useState('')
     const [stockLists, setStockLists] = useState<StockMini[]>()
 
@@ -54,10 +57,20 @@ function SearchModal() {
 }
 
 function SearchList({ stock, }: { stock: StockMini, }) {
+    const [stocks, setStock] = useRecoilState(stocksState)
+
+    const addStock = (symbol: string) => {
+        const newStocks = [...stocks, symbol]
+        const newStockUniq = [...new Set(newStocks)]
+        setStock(newStockUniq)
+    }
+
+    const isInStocks = stocks.includes(stock.symbol)
+
     return (
-        <li key={stock.symbol} className="my-auto mx-auto py-1.5 px-2 hover:bg-blue-200 hover:rounded-lg">
-            <button className="flex flex-row justify-start w-full" onClick={() => {
-                addStockToStore(stock.symbol)
+        <li key={stock.symbol} className={`my-auto mx-auto py-1.5 px-2 ${!isInStocks ? "hover:bg-blue-300" : "hover:bg-gray-200"} ${!isInStocks ? "active:ring" : ""} hover:rounded-lg`}>
+            <button disabled={isInStocks} className="flex flex-row justify-start w-full" onClick={() => {
+                addStock(stock.symbol)
             }}>
                 <span className="text-xs text-center my-auto">{stock.name}</span>
                 <span className="text-xs text-center my-auto ml-auto font-mono bg-blue-100 text-blue-800 px-1 py-0.5 rounded">{stock.symbol}</span>

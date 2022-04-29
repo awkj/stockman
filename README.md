@@ -60,7 +60,7 @@ macOS Version > 10.12 (Sierra)
 
 **1. Get stock price and status immediately**
 
-[https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=SH0000001&extend=detail](https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=SH0000001&extend=detail)
+[https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=SZ002466&extend=detail](https://stock.xueqiu.com/v5/stock/batch/quote.json?symbol=SZ002466&extend=detail)
 
 
 **2. K line from xueqiu**

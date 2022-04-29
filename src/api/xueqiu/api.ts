@@ -1,7 +1,7 @@
 import { fetch, ResponseType, Response } from "@tauri-apps/api/http"
 import { XueqiuResp, XueqiuSearchResp } from "./type"
 
-export interface Stock {
+export interface StockDetail {
     name: string
     symbol: string
     now: number
@@ -15,7 +15,9 @@ export interface Stock {
     open: number,
     last_close: number,
     turnover_rate: number
-    volume_ratio: number
+    volume_ratio: number,
+    limit_up: number
+    limit_down: number
 }
 
 export interface StockMini {
@@ -40,7 +42,8 @@ export async function getToken(): Promise<string> {
     return token
 }
 
-export async function getStocks(code: string[]): Promise<Stock[] | undefined> {
+export async function getStocks(code: string[]): Promise<StockDetail[] | undefined> {
+    if (code.length === 0) return []
 
     const token = await getToken()
 
@@ -58,7 +61,7 @@ export async function getStocks(code: string[]): Promise<Stock[] | undefined> {
         })
         return res.data.data.items.map(item => {
             const quote = item.quote
-            const stock: Stock = {
+            const stock: StockDetail = {
                 name: quote.name,
                 symbol: quote.symbol,
                 now: quote.current,
@@ -72,7 +75,9 @@ export async function getStocks(code: string[]): Promise<Stock[] | undefined> {
                 open: quote.open!,
                 last_close: quote.last_close,
                 turnover_rate: quote.turnover_rate!,
-                volume_ratio: quote.volume_ratio!
+                volume_ratio: quote.volume_ratio!,
+                limit_up: quote.limit_up!,
+                limit_down: quote.limit_down!,
             }
             return stock
         })

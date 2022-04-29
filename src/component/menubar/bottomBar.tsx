@@ -1,35 +1,58 @@
 import { useState } from "react"
-import { Stock } from "../../api/xueqiu/api"
+import { StockDetail } from "../../api/xueqiu/api"
 import dollar from '../../assets/dollar.svg'
-import { Modal } from "../../menuBar"
+import { Modal } from "../../App"
 import { getTips } from "../util"
+import { backgroundBlurState, openCoinState, openSearchState, openSettingState } from "../state"
+import {
+    useSetRecoilState,
+    useRecoilValue,
+    useRecoilState,
+} from 'recoil'
 
-export default function ButtomBar({ stock, modalStatus, setModalStatus }: { stock: Stock | undefined, modalStatus: Modal, setModalStatus: Function }) {
+
+export default function ButtomBar({ stock }: { stock: StockDetail | undefined }) {
     const [tips, setTips] = useState('')
     const [displayText, displayClass] = getTips(tips, stock)
+    const setOpenSearch = useSetRecoilState(openSearchState)
+    const setOpenSetting = useSetRecoilState(openSettingState)
+    const setOpenCoin = useSetRecoilState(openCoinState)
+
     return (
         <div className="flex flex-row bg-stone-200 h-12 w-full absolute bottom-0">
-            <button type="button" className=" items-center w-7 h-7 ml-4 p-1 my-auto  rounded-full  bg-yellow-400/70 hover:shadow-lg  hover:bg-yellow-500/80">
-                <img src={dollar} className="" />
-            </button>
-            <button
-                type="button"
-                onMouseOver={() => { setTips('添加自选') }}
-                onMouseOut={() => { setTips('') }}
-                onClick={() => {
-                    setModalStatus({
-                        ...modalStatus,
-                        searchModalOpen: !modalStatus.searchModalOpen
-                    })
-                }}
-                className={`mx-auto w-3/5 ml-6 whitespace-nowrap  my-auto h-[60%] hover:bg-blue-600/90 text-white  font-medium rounded-md text-sm  text-center items-center ${displayClass}`}
+            <div className="flex ml-4 my-auto ">
+                <button
+                    type="button" className="p-1 w-7 h-7items-center rounded-full  shadow ring-gray-200 bg-yellow-400/80 hover:shadow-lg  hover:bg-green-500/90"
+                    onClick={() => {
+                        setOpenCoin((value) => !value)
+                        setOpenSearch(false)
+                    }}
+                >
+                    <img src={dollar} className="" />
+                </button>
+            </div>
+
+            <div
+                className="w-4/5 h-full flex"
             >
-                {displayText}
-            </button>
+                <button
+                    type="button"
+                    onMouseOver={() => { setTips('添加自选') }}
+                    onMouseOut={() => { setTips('') }}
+                    onClick={() => {
+                        setOpenSearch((value) => !value)
+                    }}
+                    className={`shadow mx-auto w-4/5 whitespace-nowrap px-5 py-1 my-auto  hover:bg-blue-600/80 text-white  font-medium rounded-md text-sm  text-center items-center ${displayClass}`}
+                >
+                    {displayText}
+                </button>
+            </div>
+
             <button
                 type="button"
                 onClick={() => {
-                    setModalStatus({ ...modalStatus, settingModalOpen: !modalStatus.settingModalOpen })
+                    setOpenSetting((value) => !value)
+                    setOpenCoin(false)
                 }}
                 className="h-8 w-8 my-auto mr-4 ml-auto text-gray-900/80 rounded-full  hover:shadow hover:shadow-gray-500">
                 <svg xmlns="http://www.w3.org/2000/svg" className="" viewBox="0 0 20 20" fill="currentColor">
