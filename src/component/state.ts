@@ -19,10 +19,26 @@ export const openCoinState = atom({
     default: false,
 })
 
+export interface StockStatus {
+    symbol: string
+    expand: boolean
+}
+
 const stocksSelector = selector({
-    key: 'stocksSelector',
+    key: 'stocksStore',
     get: async ({ get }) => {
-        return await getStockToStore() as string[]
+        const stockList = await getStockToStore() as StockStatus[]
+        console.log("stockList", stockList)
+        if (stockList == undefined) {
+            return [] as StockStatus[]
+        }
+        const stockStatus = stockList.map(stock => {
+            return {
+                symbol: stock.symbol,
+                expand: false
+            }
+        })
+        return stockStatus
     }
 })
 

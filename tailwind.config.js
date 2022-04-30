@@ -6,7 +6,6 @@ module.exports = {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
   },
   plugins: [
     require('flowbite/plugin'),
@@ -25,7 +24,7 @@ module.exports = {
         },
         '.blur-mini': {
           filter: 'blur(2px)'
-        }
+        },
       })
     })
   ],

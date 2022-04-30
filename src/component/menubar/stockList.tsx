@@ -2,17 +2,18 @@ import { useState } from "react"
 import { StockDetail } from "../../api/xueqiu/api"
 import { getBackgoundClass, getTextClassByDiff, openXueqiu } from '../util'
 
-import { backgroundBlurState, openSearchState, openSettingState } from "../state"
+import { backgroundBlurState, openCoinState, openSearchState, openSettingState, stocksState, StockStatus } from "../state"
 import {
     useSetRecoilState,
     useRecoilValue,
+    useRecoilState,
 } from 'recoil'
 import StockExpand from "./stockExpand"
 
 export default function StockList({ stocks: stockDetails }: { stocks: StockDetail[] | undefined }) {
-    console.log("StockList", stockDetails)
     const setOpenSearch = useSetRecoilState(openSearchState)
     const setOpenSetting = useSetRecoilState(openSettingState)
+    const setOpenCoin = useSetRecoilState(openCoinState)
     const backgroundBlur = useRecoilValue(backgroundBlurState)
 
     if (stockDetails?.length === 0) {
@@ -22,6 +23,7 @@ export default function StockList({ stocks: stockDetails }: { stocks: StockDetai
                 onClick={() => {
                     setOpenSearch(false)
                     setOpenSetting(false)
+                    setOpenCoin(false)
                 }}>
                 <div className="flex flex-col items-center justify-center h-full text-gray-700">
                     <div>
@@ -42,6 +44,7 @@ export default function StockList({ stocks: stockDetails }: { stocks: StockDetai
         <div className={`w-full absolute top-84px bottom-12 overflow-y-auto scrollbar-hide ${backgroundBlur ? 'blur-sm' : ''}`} onClick={() => {
             setOpenSearch(false)
             setOpenSetting(false)
+            setOpenCoin(false)
         }}>
             <div className="flex flex-col mt-2 mx-3 divide-y divide-dashed  divide-gray-200 ">
                 {stockDiv}
@@ -53,17 +56,23 @@ export default function StockList({ stocks: stockDetails }: { stocks: StockDetai
 function StockItem({ stockDetail }: { stockDetail: StockDetail }) {
     const backgroundBlur = useRecoilValue(backgroundBlurState)
 
-    const [expand, setExpand] = useState(false)
+    const [stocks, setStocks] = useRecoilState(stocksState)
+
+    const i = stocks.findIndex(stock => stock.symbol === stockDetail.symbol)
+
+    function replaceItemAtIndex(arr: StockStatus[], index: number, newValue: StockStatus) {
+        return [...arr.slice(0, index), newValue, ...arr.slice(index + 1)]
+    }
     return (
         <div className="flex flex-col"  >
             <div className="flex flex-row justify-center p-2 rounded hover:bg-sky-100 hover:ring hover:ring-sky-100 hover:ring-offset-1 hover:ring-offset-blue-100" onClick={() => {
                 if (!backgroundBlur) {
-                    setExpand(e => !e)
+                    const newStock = replaceItemAtIndex(stocks, i, { symbol: stockDetail.symbol, expand: !stocks[i].expand })
+                    setStocks(newStock)
                 }
-            }
-            }>
+            }}>
                 <div className="flex flex-col mr-auto items-start">
-                    <span className="whitespace-nowrap  tracking-widest text-xs font-normal pl-0.5">{stockDetail.name}</span>
+                    <span className="whitespace-nowrap  tracking-widest text-xs font-normal pl-1">{stockDetail.name}</span>
                     <button onClick={() => {
                         openXueqiu(stockDetail.symbol)
                     }}>
@@ -80,7 +89,7 @@ function StockItem({ stockDetail }: { stockDetail: StockDetail }) {
                 </div>
             </div >
 
-            <StockExpand stockDetail={stockDetail} expand={expand} ></StockExpand>
+            <StockExpand stockDetail={stockDetail}  ></StockExpand>
         </div >
     )
 }

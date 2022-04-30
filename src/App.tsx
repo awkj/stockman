@@ -36,8 +36,8 @@ function App() {
   useEffect(() => {
     const getData = async () => {
       try {
-        let stocksSearch = [...stocks]
-        stocksSearch.unshift(...stockIndex)
+        let stocksSearch = []
+        stocksSearch.unshift(...stockIndex, ...stocks.map(stock => stock.symbol))
         const info = await getStocks(stocksSearch)
         setStockDetails(info)
         await saveStockToStore(stocks)

@@ -3,7 +3,7 @@ import { createPortal } from "react-dom"
 import { searchStocks } from "../../api/xueqiu/api"
 import { StockMini } from "../../api/xueqiu/api"
 import modalDom from "../util"
-import { openSearchState, stocksState } from "../state"
+import { openSearchState, stocksState, StockStatus } from "../state"
 import {
     useRecoilState,
     useRecoilValue,
@@ -60,12 +60,18 @@ function SearchList({ stock, }: { stock: StockMini, }) {
     const [stocks, setStock] = useRecoilState(stocksState)
 
     const addStock = (symbol: string) => {
-        const newStocks = [...stocks, symbol]
-        const newStockUniq = [...new Set(newStocks)]
+        const newStocks = [...stocks, { symbol: symbol, expand: false }]
+        const newStockUniq = [...new Map(newStocks.map(s => [s.symbol, s])).values()]
         setStock(newStockUniq)
     }
 
-    const isInStocks = stocks.includes(stock.symbol)
+    let isInStocks = false
+    stocks.forEach(s => {
+        if (s.symbol === stock.symbol) {
+            isInStocks = true
+        }
+    }
+    )
 
     return (
         <li key={stock.symbol} className={`my-auto mx-auto py-1.5 px-2 ${!isInStocks ? "hover:bg-blue-300" : "hover:bg-gray-200"} ${!isInStocks ? "active:ring" : ""} hover:rounded-lg`}>

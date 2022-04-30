@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import { open as openURL } from '@tauri-apps/api/shell'
 import { StockDetail } from "../api/xueqiu/api"
 import { Store } from 'tauri-plugin-store-api'
+import { StockStatus } from "./state"
 
 const modalDom = document.getElementById('modal')
 
@@ -10,11 +11,10 @@ export default modalDom
 
 const store = new Store('setting')
 
-const configKey = "stocklist"
+const configKey = "stocksv2"
 
 export async function getStockToStore() {
     const stockKey = await store.get<string>(configKey)
-    console.log(stockKey)
     let stockList = []
     if (stockKey !== null) {
         stockList = JSON.parse(stockKey!)
@@ -22,8 +22,17 @@ export async function getStockToStore() {
     return stockList
 }
 
-export async function saveStockToStore(stockList: string[]) {
-    await store.set(configKey, JSON.stringify(stockList))
+// 不要往配置文件中写太多内容
+function customJson(key: string, value: any) {
+    if (key === "expand") {
+        return undefined
+    } else {
+        return value
+    }
+}
+
+export async function saveStockToStore(stockList: StockStatus[]) {
+    await store.set(configKey, JSON.stringify(stockList, customJson))
     await store.save()
 }
 
