@@ -8,7 +8,7 @@ A Application for display stock and encryption coin on mac menubar
 
 实业误国、地产兴邦
 
-<img width="460" alt="image" src="https://user-images.githubusercontent.com/9017743/165908002-38efe9f6-8ba8-48f7-9abe-7fa0a11e8576.png">
+<img width="473" alt="image" src="https://user-images.githubusercontent.com/9017743/166087310-5d68addb-7f02-43db-99da-33d8276b5478.png">
 
 ## Feature
 - [x]  status Bar
