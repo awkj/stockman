@@ -4,7 +4,7 @@
 
 ## Introduction
 
-A Application for display stock and encryption coin on mac menubar
+An Application of display stock and encryption coin info on mac menubar
 
 实业误国、地产兴邦
 
