@@ -4,6 +4,8 @@ import { searchStocks } from "../../api/xueqiu/api"
 import { StockMini } from "../../api/xueqiu/api"
 import modalDom from "../util"
 import { openSearchState, stocksState, StockStatus } from "../state"
+import { useDebounce } from 'use-debounce'
+
 import {
     useRecoilState,
     useRecoilValue,
@@ -23,22 +25,24 @@ export default function SearchModal() {
 
 function Search() {
     const [keyword, setKeyword] = useState('')
+    const [debouncedText] = useDebounce(keyword, 300)
+
     const [stockLists, setStockLists] = useState<StockMini[]>()
 
     useEffect(() => {
         const searchStock = async () => {
             try {
-                if (keyword === "") {
+                if (debouncedText === "") {
                     return
                 }
-                const list = await searchStocks(keyword)
+                const list = await searchStocks(debouncedText)
                 setStockLists(list)
             } catch {
 
             }
         }
         searchStock()
-    }, [keyword])
+    }, [debouncedText])
 
     const searchList = stockLists?.map(stock => {
         return <SearchList stock={stock}  ></SearchList>
