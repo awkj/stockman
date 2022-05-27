@@ -1,15 +1,10 @@
 import { useState } from "react"
 import { StockDetail } from "../../api/xueqiu/api"
 import dollar from '../../assets/dollar.svg'
-import { Modal } from "../../App"
 import { getTips } from "../util"
-import { backgroundBlurState, openCoinState, openSearchState, openSettingState } from "../state"
-import {
-    useSetRecoilState,
-    useRecoilValue,
-    useRecoilState,
-} from 'recoil'
-
+import { openCoinState, openSearchState, openSettingState } from "../state"
+import { useRecoilState, } from 'recoil'
+import stockmanSvg from '../../assets/stockman2.svg'
 
 export default function ButtomBar({ stock }: { stock: StockDetail | undefined }) {
     const [tips, setTips] = useState('')
@@ -22,14 +17,14 @@ export default function ButtomBar({ stock }: { stock: StockDetail | undefined })
         <div className="flex flex-row bg-stone-200 h-12 w-full absolute bottom-0">
             <div className="flex ml-4 my-auto ">
                 <button
-                    type="button" className={`items-center rounded-full w-7 h-7  p-1 hover:bg-blue-600/90 active:ring active:ring-blue-300  ${openCoin ? "bg-blue-600/90" : "bg-yellow-500/90"} `}
+                    type="button" className={`items-center p-1  active:ring active:ring-amber-400  rounded-full select-none `}
                     onClick={() => {
                         setOpenCoin((value) => !value)
                         setOpenSetting(false)
                         setOpenSearch(false)
                     }}
                 >
-                    <img src={dollar} />
+                    <img src={stockmanSvg} className="w-7 h-7 select-none" />
                 </button>
             </div>
 

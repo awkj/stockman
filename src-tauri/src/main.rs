@@ -3,25 +3,30 @@
     windows_subsystem = "windows"
 )]
 
-use cocoa::appkit::{NSWindow, NSWindowStyleMask, NSWindowTitleVisibility};
 use tauri::{Manager, Runtime, Window};
 use tauri::{SystemTray, SystemTrayEvent};
 use tauri_plugin_store::PluginBuilder;
+mod menu;
 
 fn main() {
     let system_tray = SystemTray::new();
     tauri::Builder::default()
         // .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(PluginBuilder::default().build())
+        .menu(menu::menu())
         .setup(|app| {
-            let win = app.get_window("MenuBar").unwrap();
+            let win = app.get_window("main").unwrap();
             win.set_transparent_titlebar(true, true);
+            // 监听更新消息
+            win.listen("tauri://update-status".to_string(), move |msg| {
+                println!("New status: {:?}", msg);
+            });
             Ok(())
         })
         .system_tray(system_tray)
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::LeftClick { .. } => {
-                let win = app.get_window("MenuBar").unwrap();
+                let win = app.get_window("main").unwrap();
                 if win.is_visible().unwrap() {
                     win.hide().unwrap();
                 } else {
@@ -56,22 +61,23 @@ fn main() {
         .expect("error while running tauri application");
 }
 
+use cocoa::appkit::{NSWindow, NSWindowStyleMask, NSWindowTitleVisibility};
+
 pub trait WindowExt {
     #[cfg(target_os = "macos")]
-    fn set_transparent_titlebar(&self, transparent: bool, remove_toolbar: bool);
+    fn set_transparent_titlebar(&self, title_transparent: bool, remove_toolbar: bool);
 }
 
 impl<R: Runtime> WindowExt for Window<R> {
     #[cfg(target_os = "macos")]
-    fn set_transparent_titlebar(&self, transparent: bool, remove_tool_bar: bool) {
+    fn set_transparent_titlebar(&self, title_transparent: bool, remove_tool_bar: bool) {
         unsafe {
             let id = self.ns_window().unwrap() as cocoa::base::id;
-            // 已经被启用，应该使用 HiddenTitleBarWindowStyle
             NSWindow::setTitlebarAppearsTransparent_(id, cocoa::base::YES);
             let mut style_mask = id.styleMask();
             style_mask.set(
                 NSWindowStyleMask::NSFullSizeContentViewWindowMask,
-                transparent,
+                title_transparent,
             );
 
             if remove_tool_bar {
@@ -84,15 +90,13 @@ impl<R: Runtime> WindowExt for Window<R> {
 
             id.setStyleMask_(style_mask);
 
-            // 隐藏 title 文字
-            id.setTitleVisibility_(if transparent {
+            id.setTitleVisibility_(if title_transparent {
                 NSWindowTitleVisibility::NSWindowTitleHidden
             } else {
                 NSWindowTitleVisibility::NSWindowTitleVisible
             });
 
-            // 隐藏 titlebar 横栏
-            id.setTitlebarAppearsTransparent_(if transparent {
+            id.setTitlebarAppearsTransparent_(if title_transparent {
                 cocoa::base::YES
             } else {
                 cocoa::base::NO

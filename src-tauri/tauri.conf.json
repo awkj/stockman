@@ -1,7 +1,7 @@
 {
   "package": {
     "productName": "stockman",
-    "version": "1.0.3"
+    "version": "1.0.6"
   },
   "build": {
     "distDir": "../dist",
@@ -11,7 +11,7 @@
   },
   "tauri": {
     "systemTray": {
-      "iconPath": "icons/dollar-blank.png",
+      "iconPath": "icons/stockman.icns",
       "iconAsTemplate": true
     },
     "bundle": {
@@ -19,7 +19,7 @@
       "targets": "all",
       "identifier": "com.awkj.stockman",
       "icon": [
-        "icons/money-bag.png"
+        "icons/stockman.icns"
       ],
       "resources": [],
       "externalBin": [],
@@ -43,9 +43,6 @@
         "timestampUrl": ""
       }
     },
-    "updater": {
-      "active": false
-    },
     "allowlist": {
       "all": true,
       "http": {
@@ -61,8 +58,7 @@
     },
     "windows": [
       {
-        "title": "MenuBar",
-        "label": "MenuBar",
+        "title": "stockman",
         "width": 380,
         "height": 700,
         "resizable": true,
