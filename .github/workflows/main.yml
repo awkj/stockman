@@ -53,13 +53,7 @@ jobs:
       # You may pin to the exact commit or the version.
       # uses: pnpm/action-setup@10693b3829bf86eb2572aef5f3571dcf5ca9287d
       uses: pnpm/action-setup@v2.2.2
-      with:
-        # Version of pnpm to install
-        version: # optional
-        # Where to store pnpm files
-        dest: # optional, default is ~/setup-pnpm
-        # If specified, run `pnpm install`
-        run_install: # optional, default is null
+    
     - name: install Rust stable
       uses: actions-rs/toolchain@v1
       with:
