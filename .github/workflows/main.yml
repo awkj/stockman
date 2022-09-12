@@ -1,6 +1,8 @@
 name: 'My Workflow'
 
-on: pull_request
+on: 
+    push:
+      branches: [ master ]
 
 jobs:
   create-release:
