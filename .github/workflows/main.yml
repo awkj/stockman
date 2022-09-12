@@ -47,6 +47,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 16
+        
+    - name: GitHub Action for pnpm
+      # You may pin to the exact commit or the version.
+      # uses: znck/pnpm@aa6c9dc74df684c62617db39734aa897f1859f61
+      uses: znck/pnpm@v0.1.0-alpha.1
     - name: install Rust stable
       uses: actions-rs/toolchain@v1
       with:
