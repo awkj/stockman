@@ -1,54 +1,10 @@
-name: 'My Workflow'
-
-on: 
-    push:
-      branches: [ master ]
+name: "publish"
+on:
+  push:
+    branches: [ master ]
 
 jobs:
-  create-release:
-    runs-on: ubuntu-20.04
-    outputs:
-      release_id: ${{ steps.create-release.outputs.result }}
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2.2.1
-        with:
-
-          version: 7.11.0
-
-      - name: setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-    
-      - name: get version
-        run: echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
-      - name: create release
-        id: create-release
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const { data } = await github.rest.repos.createRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag_name: `app-v${process.env.PACKAGE_VERSION}`,
-              name: `Desktop App v${process.env.PACKAGE_VERSION}`,
-              body: 'Take a look at the assets to download and install this app.',
-              draft: true,
-              prerelease: false
-            })
-            
-            return data.id
-
-  build-tauri:
-    needs: create-release
+  publish-tauri:
     strategy:
       fail-fast: false
       matrix:
@@ -61,19 +17,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 16
-
-    - name: Setup PNPM
-      uses: pnpm/action-setup@v2.2.1
-      with:
-
-        version: 7.11.0
-
-    - name: Install dependencies
-      run: pnpm install
-      
-    - name: Build Packages
-      run: pnpm run build
- 
     - name: install Rust stable
       uses: actions-rs/toolchain@v1
       with:
@@ -89,24 +32,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        releaseId: ${{ needs.create-release.outputs.release_id }}
-
-  publish-release:
-    runs-on: ubuntu-20.04
-    needs: [ create-release, build-tauri ]
-    
-    steps:
-      - name: publish release
-        id: publish-release
-        uses: actions/github-script@v6
-        env:
-          release_id: ${{ needs.create-release.outputs.release_id }}
-        with:
-          script: |
-            github.rest.repos.updateRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              release_id: process.env.release_id,
-              draft: false,
-              prerelease: false
-            })
+        tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version
+        releaseName: "App v__VERSION__"
+        releaseBody: "See the assets to download this version and install."
+        releaseDraft: true
+        prerelease: false
