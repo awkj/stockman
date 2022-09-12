@@ -12,10 +12,19 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.1
+
       - name: setup node
         uses: actions/setup-node@v1
         with:
           node-version: 16
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+    
       - name: get version
         run: echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
       - name: create release
@@ -49,11 +58,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 16
-    - name: Setup pnpm
-      # You may pin to the exact commit or the version.
-      # uses: pnpm/action-setup@10693b3829bf86eb2572aef5f3571dcf5ca9287d
-      uses: pnpm/action-setup@v2.2.2
-    
+
+    - name: Install dependencies
+        run: pnpm install
+      
+    - name: Build Packages
+        run: pnpm run build
+ 
     - name: install Rust stable
       uses: actions-rs/toolchain@v1
       with:
