@@ -19,7 +19,9 @@
       "targets": "all",
       "identifier": "com.awkj.stockman",
       "icon": [
-        "icons/icon.ico"
+        "icons/icon.ico",
+        "icons/stockman.icns",
+        "icons/stockman.png"
       ],
       "resources": [],
       "externalBin": [],
