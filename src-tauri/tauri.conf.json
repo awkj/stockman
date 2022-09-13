@@ -5,13 +5,13 @@
   },
   "build": {
     "distDir": "../dist",
-    "devPath": "http://localhost:3000",
-    "beforeDevCommand": "yarn dev",
-    "beforeBuildCommand": "yarn build"
+    "devPath": "http://localhost:5173",
+    "beforeDevCommand": "",
+    "beforeBuildCommand": ""
   },
   "tauri": {
     "systemTray": {
-      "iconPath": "icons/stockman.icns",
+      "iconPath": "icons/stockman.png",
       "iconAsTemplate": true
     },
     "bundle": {
@@ -19,7 +19,7 @@
       "targets": "all",
       "identifier": "com.awkj.stockman",
       "icon": [
-        "icons/stockman.icns"
+        "icons/stockman.png"
       ],
       "resources": [],
       "externalBin": [],
@@ -64,7 +64,7 @@
         "resizable": true,
         "fullscreen": false,
         "visible": true,
-        "decorations": true,
+        "decorations": false,
         "skipTaskbar": false
       }
     ],
