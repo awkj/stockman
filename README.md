@@ -30,7 +30,7 @@ macOS Version > 10.12 (Sierra)
 
 ## Infrastructure
 
-- Tauri（a similar like Electron, by base on rust and system webview)
+- Tauri (A framework similar to Electron, but based on Rust and system webview)
 - Typescript (You Know)
 - Vite (fast and fast on develment)
 - Rust (use on backend on tauri)
