@@ -18,6 +18,7 @@ export interface StockDetail {
     volume_ratio: number,
     limit_up: number
     limit_down: number
+    exchange: string
 }
 
 export interface StockMini {
@@ -78,6 +79,7 @@ export async function getStocks(code: string[]): Promise<StockDetail[] | undefin
                 volume_ratio: quote.volume_ratio!,
                 limit_up: quote.limit_up!,
                 limit_down: quote.limit_down!,
+                exchange: quote.exchange
             }
             return stock
         })

@@ -14,6 +14,11 @@ export interface StockStatus {
     expand: boolean
 }
 
+export const showExchange = atom({
+    key: 'showExchange',
+    default: ['']
+})
+
 const stocksSelector = selector({
     key: 'stocksStore',
     get: async ({ get }) => {
