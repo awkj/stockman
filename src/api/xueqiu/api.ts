@@ -28,7 +28,7 @@ export interface StockMini {
 let token: string = ''
 
 export async function getToken(): Promise<string> {
-    if (token !== '') return token
+    if (token) return token
 
     const res = await fetch('https://xueqiu.com/', {
         method: "GET",
@@ -43,7 +43,7 @@ export async function getToken(): Promise<string> {
 }
 
 export async function getStocks(code: string[]): Promise<StockDetail[] | undefined> {
-    if (code.length === 0) return []
+    if (!code) return []
 
     const token = await getToken()
 
@@ -56,7 +56,7 @@ export async function getStocks(code: string[]): Promise<StockDetail[] | undefin
         res = await fetch<XueqiuResp>(url, {
             method: "GET",
             headers: {
-                'Cookie': await getToken()
+                'Cookie': token
             }
         })
         return res.data.data.items.map(item => {
@@ -98,16 +98,10 @@ export async function searchStocks(key: string): Promise<StockMini[] | undefined
         res = await fetch<XueqiuSearchResp>(url, {
             method: "GET",
             headers: {
-                'Cookie': await getToken()
+                'Cookie': token
             }
         })
-        return res.data.stocks.filter((item => {
-            if (item.code.includes("SH") || item.code.includes("SZ")) {
-                return true
-            }
-        })
-
-        ).map(item => {
+        return res.data.stocks.map(item => {
             const stock: StockMini = {
                 name: item.name,
                 symbol: item.code,

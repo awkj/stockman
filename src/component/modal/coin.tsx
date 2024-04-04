@@ -1,15 +1,14 @@
 import { createPortal } from "react-dom"
 import modalDom from "../util"
-import { openCoinState } from "../state"
+import { modalState } from "../state"
 
 import {
     useRecoilValue,
 } from 'recoil'
 
 export default function CoinModal() {
-    const openCoin = useRecoilValue(openCoinState)
 
-    if (!openCoin) {
+    if (useRecoilValue(modalState) != 'coin') {
         return null
     }
 

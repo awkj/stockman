@@ -3,7 +3,7 @@ import { createPortal } from "react-dom"
 import { searchStocks } from "../../api/xueqiu/api"
 import { StockMini } from "../../api/xueqiu/api"
 import modalDom from "../util"
-import { openSearchState, stocksState, StockStatus } from "../state"
+import { stocksState, modalState } from "../state"
 import { useDebounce } from 'use-debounce'
 
 import {
@@ -13,8 +13,7 @@ import {
 
 
 export default function SearchModal() {
-    const openSearch = useRecoilValue(openSearchState)
-    if (!openSearch) {
+    if (useRecoilValue(modalState) != 'search') {
         return null
     }
     return (

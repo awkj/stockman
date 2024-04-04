@@ -1,17 +1,16 @@
 import { createPortal } from "react-dom"
 import modalDom from "../util"
 import { appWindow } from "@tauri-apps/api/window"
-import { openSettingState, stocksState } from "../state"
+import { stocksState } from "../state"
 
+import { modalState } from "../state"
 import {
     useRecoilValue,
 } from 'recoil'
 import { saveStockToStore } from "../util"
 
 export default function SettingModal() {
-    const openSetting = useRecoilValue(openSettingState)
-
-    if (!openSetting) {
+    if (useRecoilValue(modalState) != 'setting') {
         return null
     }
 

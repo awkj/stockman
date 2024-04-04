@@ -4,19 +4,9 @@ import {
 } from 'recoil'
 import { getStockToStore } from "./util"
 
-export const openSearchState = atom({
-    key: 'openSearchState',
-    default: false,
-})
-
-export const openSettingState = atom({
-    key: 'openSettingState',
-    default: false,
-})
-
-export const openCoinState = atom({
-    key: 'openCoinState',
-    default: false,
+export const modalState = atom({
+    key: 'modalState',
+    default: null as null | 'search' | 'setting' | 'coin'
 })
 
 export interface StockStatus {
@@ -50,15 +40,6 @@ export const stocksState = atom({
 
 export const backgroundBlurState = selector({
     key: 'backgroundBlur',
-    get: ({ get }) => {
-        const openSearch = get(openSearchState)
-        const openSetting = get(openSettingState)
-        const openCoin = get(openCoinState)
-        if (openSearch || openSetting || openCoin) {
-            return true
-        } else {
-            return false
-        }
-    },
+    get: ({ get }) => get(modalState) == 'search',
 })
 

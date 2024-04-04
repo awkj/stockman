@@ -1,28 +1,22 @@
 import { useState } from "react"
 import { StockDetail } from "../../api/xueqiu/api"
-import dollar from '../../assets/dollar.svg'
 import { getTips } from "../util"
-import { openCoinState, openSearchState, openSettingState } from "../state"
-import { useRecoilState, } from 'recoil'
+import { useRecoilState } from 'recoil'
 import stockmanSvg from '../../assets/stockman2.svg'
 import configSvg from '../../assets/config.svg'
+import { modalState } from "../state"
 
 export default function BottomBar({ stock }: { stock: StockDetail | undefined }) {
+    const [modalStateValue, setModalState] = useRecoilState(modalState)
     const [tips, setTips] = useState('')
     const [displayText, displayClass] = getTips(tips, stock)
-    const [openSearch, setOpenSearch] = useRecoilState(openSearchState)
-    const [openSetting, setOpenSetting] = useRecoilState(openSettingState)
-    const [openCoin, setOpenCoin] = useRecoilState(openCoinState)
-
     return (
         <div className="flex flex-row bg-stone-200 h-12 w-full absolute bottom-0">
             <div className="flex ml-4 my-auto ">
                 <button
                     type="button" className={`items-center p-1  active:ring active:ring-amber-400  rounded-full select-none `}
                     onClick={() => {
-                        setOpenCoin((value) => !value)
-                        setOpenSetting(false)
-                        setOpenSearch(false)
+                        setModalState((value) => value === 'coin' ? null : 'coin')
                     }}
                 >
                     <img src={stockmanSvg} className="w-7 h-7 select-none" />
@@ -37,13 +31,11 @@ export default function BottomBar({ stock }: { stock: StockDetail | undefined })
                     onMouseOver={() => { setTips('添加自选') }}
                     onMouseOut={() => { setTips('') }}
                     onClick={() => {
-                        setOpenSearch((value) => !value)
-                        setOpenSetting(false)
-                        setOpenCoin(false)
+                        setModalState((value) => value === 'search' ? null : 'search')
                     }}
-                    className={`shadow mx-auto w-4/5 whitespace-nowrap px-5 py-1 my-auto  hover:bg-blue-600/80 text-white  font-medium rounded-md text-sm  text-center items-center ${displayClass} ${openSearch ? "bg-blue-600/80 " : ""}`}
+                    className={`shadow mx-auto w-4/5 whitespace-nowrap px-5 py-1 my-auto  hover:bg-blue-600/80 text-white  font-medium rounded-md text-sm  text-center items-center ${displayClass} ${modalStateValue === 'search' ? "bg-blue-600/80 " : ""}`}
                 >
-                    {openSearch ? "添加自选" : displayText}
+                    {modalStateValue === 'search' ? "添加自选" : displayText}
                 </button>
             </div>
 
@@ -51,9 +43,7 @@ export default function BottomBar({ stock }: { stock: StockDetail | undefined })
                 <button
                     type="button" className={`items-center p-1  active:ring active:ring-amber-400  rounded-full select-none `}
                     onClick={() => {
-                        setOpenCoin(false)
-                        setOpenSetting((value) => !value)
-                        setOpenSearch(false)
+                        setModalState((value) => value === 'setting' ? null : 'setting')
                     }}
                 >
                     <img src={configSvg} className="w-7 h-7 select-none" />
