@@ -18,6 +18,7 @@ export interface StockDetail {
     volume_ratio: number,
     limit_up: number
     limit_down: number
+    exchange: string
 }
 
 export interface StockMini {
@@ -28,7 +29,7 @@ export interface StockMini {
 let token: string = ''
 
 export async function getToken(): Promise<string> {
-    if (token !== '') return token
+    if (token) return token
 
     const res = await fetch('https://xueqiu.com/', {
         method: "GET",
@@ -43,7 +44,7 @@ export async function getToken(): Promise<string> {
 }
 
 export async function getStocks(code: string[]): Promise<StockDetail[] | undefined> {
-    if (code.length === 0) return []
+    if (!code) return []
 
     const token = await getToken()
 
@@ -56,7 +57,7 @@ export async function getStocks(code: string[]): Promise<StockDetail[] | undefin
         res = await fetch<XueqiuResp>(url, {
             method: "GET",
             headers: {
-                'Cookie': await getToken()
+                'Cookie': token
             }
         })
         return res.data.data.items.map(item => {
@@ -78,6 +79,7 @@ export async function getStocks(code: string[]): Promise<StockDetail[] | undefin
                 volume_ratio: quote.volume_ratio!,
                 limit_up: quote.limit_up!,
                 limit_down: quote.limit_down!,
+                exchange: quote.exchange
             }
             return stock
         })
@@ -98,16 +100,10 @@ export async function searchStocks(key: string): Promise<StockMini[] | undefined
         res = await fetch<XueqiuSearchResp>(url, {
             method: "GET",
             headers: {
-                'Cookie': await getToken()
+                'Cookie': token
             }
         })
-        return res.data.stocks.filter((item => {
-            if (item.code.includes("SH") || item.code.includes("SZ")) {
-                return true
-            }
-        })
-
-        ).map(item => {
+        return res.data.stocks.map(item => {
             const stock: StockMini = {
                 name: item.name,
                 symbol: item.code,

@@ -15,20 +15,12 @@ const configKey = "stocksv2"
 
 export async function getStockToStore() {
     const stockKey = await store.get<string>(configKey)
-    let stockList = []
-    if (stockKey !== null) {
-        stockList = JSON.parse(stockKey!)
-    }
-    return stockList
+    return stockKey ? JSON.parse(stockKey!) : []
 }
 
 // 不要往配置文件中写太多内容
 function customJson(key: string, value: any) {
-    if (key === "expand") {
-        return undefined
-    } else {
-        return value
-    }
+    return key === 'expand' ? undefined : value
 }
 
 export async function saveStockToStore(stockList: StockStatus[]) {

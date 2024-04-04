@@ -2,7 +2,7 @@ import { useState } from "react"
 import { StockDetail } from "../../api/xueqiu/api"
 import { getBackgoundClass, getTextClassByDiff, openXueqiu } from '../util'
 
-import { backgroundBlurState, openCoinState, openSearchState, openSettingState, stocksState, StockStatus } from "../state"
+import { backgroundBlurState, modalState, stocksState, StockStatus } from "../state"
 import {
     useSetRecoilState,
     useRecoilValue,
@@ -11,20 +11,14 @@ import {
 import StockExpand from "./stockExpand"
 
 export default function StockList({ stocks: stockDetails }: { stocks: StockDetail[] | undefined }) {
-    const setOpenSearch = useSetRecoilState(openSearchState)
-    const setOpenSetting = useSetRecoilState(openSettingState)
-    const setOpenCoin = useSetRecoilState(openCoinState)
     const backgroundBlur = useRecoilValue(backgroundBlurState)
+    const setModalState = useSetRecoilState(modalState)
 
     if (stockDetails?.length === 0) {
         return (
             <div
                 className={`w-full absolute top-84px bottom-12 overflow-y-auto scrollbar-hide ${backgroundBlur ? 'blur-sm' : ''}`}
-                onClick={() => {
-                    setOpenSearch(false)
-                    setOpenSetting(false)
-                    setOpenCoin(false)
-                }}>
+                onClick={() => setModalState(null)}>
                 <div className="flex flex-col items-center justify-center h-full text-gray-700">
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -41,11 +35,7 @@ export default function StockList({ stocks: stockDetails }: { stocks: StockDetai
         return <StockItem key={stockDetail.symbol} stockDetail={stockDetail} ></StockItem>
     })
     return (
-        <div className={`w-full absolute top-84px bottom-12 overflow-y-auto scrollbar-hide ${backgroundBlur ? 'blur-sm' : ''}`} onClick={() => {
-            setOpenSearch(false)
-            setOpenSetting(false)
-            setOpenCoin(false)
-        }}>
+        <div className={`w-full absolute top-84px bottom-12 overflow-y-auto scrollbar-hide ${backgroundBlur ? 'blur-sm' : ''}`} onClick={() => setModalState(null)}>
             <div className="flex flex-col mt-2 mx-3 divide-y divide-dashed  divide-gray-200 ">
                 {stockDiv}
             </div>
