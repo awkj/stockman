@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { createPortal } from "react-dom"
 import { searchStocks } from "../../api/xueqiu/api"
 import { StockMini } from "../../api/xueqiu/api"
@@ -27,6 +27,11 @@ function Search() {
     const [debouncedText] = useDebounce(keyword, 300)
 
     const [stockLists, setStockLists] = useState<StockMini[]>()
+    const searchRef = useRef<HTMLInputElement>(null)
+
+    useEffect(() => {
+        searchRef.current?.focus()
+    }, [searchRef.current]);
 
     useEffect(() => {
         const searchStock = async () => {
@@ -50,6 +55,7 @@ function Search() {
         <div className="z-100 bg-neutral-100 pt-4 pb-4 px-4 top-1/3 left-0 right-0 absolute rounded-xl w-4/5 mx-auto my-auto">
             <input
                 onChange={e => setKeyword(e.target.value)}
+                ref={searchRef}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg ring ring-blue-400  focus:border-blue-500 block w-full p-2">
             </input>
             <ul className="mt-2">
