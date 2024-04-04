@@ -3,7 +3,7 @@
     windows_subsystem = "windows"
 )]
 
- 
+#[allow(unused_imports)]
 use window_shadows::set_shadow;
 
 use tauri::{Manager, Runtime, Window};
@@ -22,7 +22,7 @@ fn main() {
             #[cfg(target_os = "macos")]
             win.set_transparent_titlebar(true, true);
 
-         
+            #[cfg(any(target_os = "macos", target_os = "windows"))]
             set_shadow(&win, true).unwrap();
             // 监听更新消息
             win.listen("tauri://update-status".to_string(), move |msg| {
@@ -69,12 +69,12 @@ fn main() {
 }
 #[cfg(target_os = "macos")]
 use cocoa::appkit::{NSWindow, NSWindowStyleMask, NSWindowTitleVisibility};
- 
+
 pub trait WindowExt {
     #[cfg(target_os = "macos")]
     fn set_transparent_titlebar(&self, title_transparent: bool, remove_toolbar: bool);
 }
- 
+
 impl<R: Runtime> WindowExt for Window<R> {
     #[cfg(target_os = "macos")]
     fn set_transparent_titlebar(&self, title_transparent: bool, remove_tool_bar: bool) {
